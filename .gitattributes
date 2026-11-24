@@ -1,0 +1,3 @@
+# Keep source bytes exactly as committed. Line-ending conversion would change the
+# compiled debug metadata and therefore the deterministic plugin hash.
+* -text

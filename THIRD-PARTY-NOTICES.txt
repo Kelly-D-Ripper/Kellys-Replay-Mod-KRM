@@ -1,0 +1,45 @@
+THIRD-PARTY NOTICES
+
+ReplayMod is a continuation of the original ReplayMod by chiester3105.
+This notice covers the additional build-time helper below; it does not assign
+an open-source license to the original ReplayMod or to Nuclear Option.
+
+BepInEx.AssemblyPublicizer.MSBuild 0.4.3
+
+ReplayMod compiles the package's small IgnoresAccessChecksToAttribute.cs helper.
+The local package metadata identifies BepInEx as author and MIT as its license.
+No AssemblyPublicizer tool binaries are included in the player package.
+
+Package source commit: 874cfb60160c053cbefc7277f5f0cb6f7a732748
+Source: https://github.com/BepInEx/BepInEx.AssemblyPublicizer
+License: https://raw.githubusercontent.com/BepInEx/BepInEx.AssemblyPublicizer/874cfb60160c053cbefc7277f5f0cb6f7a732748/LICENSE
+Helper SHA256: 676A48514D13F5490463A3DA3DB3024F92AAC56A6AFA6CFC71D9E1B2C30993F1
+
+The following is the license at the package's pinned source commit:
+MIT License
+
+Copyright (c) 2022 BepInEx
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Newtonsoft.Json
+
+Camera projects use the Newtonsoft.Json assembly supplied with Nuclear Option.
+Newtonsoft.Json is made available under the MIT license by James Newton-King.
+The player package does not redistribute its assembly.

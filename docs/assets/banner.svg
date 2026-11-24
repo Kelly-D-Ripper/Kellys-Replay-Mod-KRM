@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="Kelly's Replay Mod (KRM) for Nuclear Option">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1320"/>
+      <stop offset="0.55" stop-color="#132238"/>
+      <stop offset="1" stop-color="#1d1a2e"/>
+    </linearGradient>
+    <linearGradient id="track" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f2a541"/>
+      <stop offset="1" stop-color="#e4572e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.82" cy="0.35" r="0.45">
+      <stop offset="0" stop-color="#f2a541" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#f2a541" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="320" fill="url(#sky)"/>
+  <rect width="1280" height="320" fill="url(#glow)"/>
+  <g stroke="#ffffff" stroke-opacity="0.05">
+    <path d="M0 80H1280M0 160H1280M0 240H1280"/>
+    <path d="M160 0V320M320 0V320M480 0V320M640 0V320M800 0V320M960 0V320M1120 0V320"/>
+  </g>
+  <!-- Camera path with keyframes -->
+  <path d="M760 210 C 860 120, 960 250, 1060 140 S 1200 90, 1240 120" fill="none" stroke="#f2a541" stroke-width="3" stroke-dasharray="10 8" stroke-opacity="0.85"/>
+  <g fill="#0b1320" stroke="#f2a541" stroke-width="3">
+    <rect x="752" y="202" width="16" height="16" transform="rotate(45 760 210)"/>
+    <rect x="952" y="186" width="16" height="16" transform="rotate(45 960 194)"/>
+    <rect x="1052" y="132" width="16" height="16" transform="rotate(45 1060 140)"/>
+    <rect x="1192" y="96" width="16" height="16" transform="rotate(45 1200 104)"/>
+  </g>
+  <!-- Jet silhouette following the path -->
+  <g transform="translate(1004 168) rotate(-28)" fill="#e8edf5">
+    <path d="M-34 0 L18 -4 L34 0 L18 4 Z"/>
+    <path d="M-4 -2 L-18 -22 L-10 -22 L10 -2 Z"/>
+    <path d="M-4 2 L-18 22 L-10 22 L10 2 Z"/>
+    <path d="M-30 -1 L-38 -11 L-33 -11 L-24 -1 Z"/>
+    <path d="M-30 1 L-38 11 L-33 11 L-24 1 Z"/>
+  </g>
+  <text x="72" y="138" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="64" font-weight="700" fill="#ffffff">Kelly's Replay Mod</text>
+  <text x="74" y="186" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="26" fill="#aab6c8">Record. Replay. Direct the shot in Nuclear Option.</text>
+  <rect x="74" y="210" width="78" height="34" rx="6" fill="url(#track)"/>
+  <text x="113" y="234" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="19" font-weight="700" fill="#0b1320">KRM</text>
+  <!-- Timeline -->
+  <rect x="72" y="276" width="1136" height="6" rx="3" fill="#ffffff" fill-opacity="0.12"/>
+  <rect x="72" y="276" width="620" height="6" rx="3" fill="url(#track)"/>
+  <circle cx="692" cy="279" r="9" fill="#ffffff"/>
+</svg>

@@ -1,0 +1,30 @@
+using Mono.Cecil;
+
+public static class StudioLightUiChecks
+{
+    public static (int Checks,int Failures) Run(AssemblyDefinition assembly)
+    {
+        int checks=0,failures=0;
+        var types=AllTypes(assembly.MainModule.Types).ToDictionary(type=>type.FullName);
+        const string ui="ReplayMod.UI.TrailerSuiteUi",director="ReplayMod.Director.ReplayDirector";
+        MethodDefinition? Method(string name)=>types.TryGetValue(ui,out var type)?type.Methods.FirstOrDefault(method=>method.Name==name&&method.HasBody):null;
+        bool Calls(MethodDefinition? body,string owner,string name)=>body?.Body.Instructions.Any(instruction=>instruction.Operand is MethodReference method&&method.DeclaringType.GetElementType().FullName==owner&&method.Name==name)==true;
+        var bodies=types.Values.Where(type=>type.FullName==ui||type.FullName.StartsWith(ui+"/",StringComparison.Ordinal)).SelectMany(type=>type.Methods.Where(method=>method.HasBody)).ToArray();
+        bool AnyCall(string owner,string name)=>bodies.Any(body=>Calls(body,owner,name));
+        void Check(string title,bool condition){checks++;if(!condition)failures++;Console.WriteLine((condition?"PASS":"FAIL")+" studio light UI "+title);}
+        Check("Lights is reachable through the native-suite workspace dock",Method(".cctor")?.Body.Instructions.Where(instruction=>instruction.Operand is string).Select(instruction=>(string)instruction.Operand).Contains("Lights")==true&&Calls(Method("RebuildMenu"),ui,"LightsMenu"));
+        Check("light editing is playback-only and stops during takes and reconstruction",Calls(Method("get_LightsEditable"),ui,"get_Playback")&&Calls(Method("get_LightsEditable"),ui,"get_Busy")&&Calls(Method("get_LightsEditable"),director,"get_TakeActive")&&Calls(Method("LateUpdate"),ui,"get_LightsEditable"));
+        Check("world markers are visible only through the current visible editor",Calls(Method("LateUpdate"),director,"SetStudioLightEditorVisible")&&Calls(Method("LateUpdate"),ui,"get_IsVisible")&&Method("LateUpdate")?.Body.Instructions.Any(instruction=>instruction.Operand is string text&&text=="Lights")==true&&Calls(Method("OnDisable"),director,"SetStudioLightEditorVisible"));
+        Check("source selection and edited labels refresh without rebuilding text entry",Calls(Method("RefreshStudioLightControls"),director,"get_SelectedStudioLight")&&Calls(Method("RefreshStudioLightControls"),director,"get_Project")&&Calls(Method("RefreshStudioLightControls"),director,"get_StudioLightCount")&&Calls(Method("RefreshStudioLightControls"),ui,"RebuildMenu")&&Calls(Method("RefreshStudioLightControls"),ui,"RefreshStudioLightSourceLabels")&&Calls(Method("RefreshStudioLightSourceLabels"),"TMPro.TMP_Text","set_text"));
+        Check("create duplicate delete and selection use the owned director controller",new[]{"AddStudioLight","DuplicateStudioLight","DeleteStudioLight","SelectStudioLight"}.All(name=>AnyCall(director,name)));
+        Check("placement offers Free-camera dragging plus all six local aiming turns",new[]{"PlaceStudioLightAtView","AimStudioLightFromView","NudgeStudioLight","RotateStudioLight","ResetStudioLightRotation","EnterFreeCamera"}.All(name=>AnyCall(director,name))&&Calls(Method("RefreshStudioLightControls"),director,"get_StudioLightCanDrag")&&bodies.Sum(body=>body.Body.Instructions.Count(instruction=>instruction.Operand is MethodReference method&&method.DeclaringType.FullName==director&&method.Name=="RotateStudioLight"))==6&&bodies.All(body=>!Calls(body,"UnityEngine.Physics","Raycast")));
+        Check("light menu never asks users to edit transform coordinates",bodies.All(body=>body.Body.Instructions.All(instruction=>instruction.Operand is not FieldReference field||field.DeclaringType.FullName!="ReplayMod.Director.StudioLightSettings"||field.Name is not("x" or "y" or "z" or "qx" or "qy" or "qz" or "qw"))));
+        Check("RGB hex HSV and native colour-temperature controls are compiled",AnyCall("ReplayMod.UI.SuiteRgb","TryParse")&&AnyCall("UnityEngine.Color","HSVToRGB")&&AnyCall("UnityEngine.Color","RGBToHSV")&&AnyCall("UnityEngine.ColorUtility","ToHtmlStringRGB")&&bodies.Any(body=>body.Body.Instructions.Any(instruction=>instruction.Operand is FieldReference field&&field.DeclaringType.FullName=="ReplayMod.Director.StudioLightSettings"&&field.Name=="useTemperature")));
+        Check("native capability status refreshes and unsupported per-light shadow fields are absent",Calls(Method("RefreshStudioLightControls"),director,"get_StudioLightShadowsAvailable")&&Calls(Method("RefreshStudioLightControls"),director,"get_StudioLightSoftShadowsAvailable")&&Calls(Method("RefreshStudioLightControls"),director,"get_StudioLightCookiesAvailable")&&Calls(Method("RefreshStudioLightControls"),director,"get_StudioLightCapabilities")&&Calls(Method("StudioLightSources"),director,"get_StudioLightCapabilities")&&bodies.All(body=>body.Body.Instructions.All(instruction=>instruction.Operand is not FieldReference field||field.DeclaringType.FullName!="ReplayMod.Director.StudioLightSettings"||field.Name is not("shadowBias" or "shadowNormalBias" or "shadowResolution"))));
+        Check("light names are displayed literally instead of TMP markup",Calls(Method("StudioLightSources"),"TMPro.TMP_Text","set_richText")&&Calls(Method("LightsMenu"),"TMPro.TMP_Text","set_richText")&&Calls(Method("CleanStudioLightName"),"System.Char","IsControl"));
+        Check("light properties share the existing project Save footer",Calls(Method("LightsMenu"),ui,"Page")&&Method("Page")?.Body.Instructions.Any(instruction=>instruction.Operand is string text&&text.Contains("custom lights",StringComparison.Ordinal))==true&&AnyCall(director,"Save"));
+        Console.WriteLine($"Studio light UI API/integration audit: {checks} groups, {failures} failures");return(checks,failures);
+    }
+    private static IEnumerable<TypeDefinition> AllTypes(IEnumerable<TypeDefinition> types)
+    {foreach(var type in types){yield return type;foreach(var nested in AllTypes(type.NestedTypes))yield return nested;}}
+}

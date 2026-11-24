@@ -1,0 +1,44 @@
+using System.IO;
+using ReplayMod.Core;
+
+namespace ReplayMod.Events.ConcreteEvents;
+
+[ReplayEvent(EventType.PartDetach)]
+public class DetachPartEvent : IReplayEvent
+{
+	public uint unitID;
+
+	public byte partID;
+
+	public double Time { get; set; }
+
+	public EventType EventType { get; } = EventType.PartDetach;
+
+	public void Execute(object worker = null)
+	{
+		if (worker is UnitController unitController)
+		{
+			unitController.Execute(this);
+		}
+	}
+
+	public void Read(BinaryReader br)
+	{
+		Plugin.SafeLog("Reading detach part packet");
+		Time = br.ReadDouble();
+		unitID = br.ReadUInt32();
+		partID = br.ReadByte();
+	}
+
+	public void Reset()
+	{
+	}
+
+	public void Write(BinaryWriter bw)
+	{
+		Plugin.SafeLog("writing detach part packet");
+		bw.Write(Time);
+		bw.Write(unitID);
+		bw.Write(partID);
+	}
+}
