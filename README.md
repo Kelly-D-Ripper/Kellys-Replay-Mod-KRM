@@ -168,6 +168,8 @@ A huge thank you to the people who spent months testing, bug hunting, requesting
 
 I couldn't have done it without them. Their time and input have massively shaped this mod, and I am hugely thankful. I hope this tool gives them what they need to enjoy creating the content they love to make.
 
+And a special thank you to my wife, for putting up with all the time I spent wrangling this into existence. 💚
+
 ## 🙏 Credits
 
 Original [ReplayMod](https://github.com/chiester3105/ReplayMod) by **chiester3105**. Continued as Kelly's Replay Mod by **Brig. Gen. Kelly D. Ripper**, with the original author's permission.
