@@ -154,6 +154,20 @@ dotnet run --project tests/Audit/Audit.csproj -c Release -- src/bin/Release/net4
 
 </details>
 
+## 💚 Thank you
+
+A huge thank you to the people who spent months testing, bug hunting, requesting features and offering massively appreciated support:
+
+- **Enplo**: [YouTube](https://www.youtube.com/channel/UCXho3MN24cEPnsQ_VDzur8Q)
+- **Shutter**: [YouTube](https://www.youtube.com/channel/UCbwrfYzULVGh4uNZa48hv6Q)
+- **Zephyrine**: [YouTube](https://www.youtube.com/channel/UCukJUnp5UFpZTCpkYW4K6xw)
+- **theLV2**: [YouTube](https://www.youtube.com/channel/UCnDZw6SDd3y-oB_W63bIH1w)
+- **At0m|c**
+- **Dodobirdie**: [YouTube](https://www.youtube.com/channel/UCK2lw04A4XZGJxh3Geaf92A)
+- **Snejokes**
+
+I couldn't have done it without them. Their time and input have massively shaped this mod, and I am hugely thankful. I hope this tool gives them what they need to enjoy creating the content they love to make.
+
 ## 🙏 Credits
 
 Original [ReplayMod](https://github.com/chiester3105/ReplayMod) by **chiester3105**. Continued as Kelly's Replay Mod by **Brig. Gen. Kelly D. Ripper**, with the original author's permission.
