@@ -23,7 +23,9 @@ public static class DoormanMetadataProbe
             string plugin=Field("Plugin"),name=Field("Name"),author=Field("Author"),desc=Field("Description"),image=Field("Image");
             var links=(IEnumerable)t.GetField("Links",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic).GetValue(card);
             bool discord=false;int count=0;foreach(var link in links){count++;var lt=link.GetType();if((string)lt.GetField("Url").GetValue(link)=="https://discord.gg/FhsqkbgtWS"&&(string)lt.GetField("Label").GetValue(link)=="Discord")discord=true;}
-            if(plugin!="com.chiester3105.replayMod"||name!="Kelly's Replay Mod"||author!="Brig. Gen. Kelly D. Ripper"||!desc.Contains("chiester3105")||image!=""||!discord||count!=1)throw new Exception("Unexpected preview fields");
+            if(plugin!="com.chiester3105.replayMod"||name!="Kelly's Replay Mod"||author!="Brig. Gen. Kelly D. Ripper"||!desc.Contains("chiester3105")||image!=""||!discord||count!=2)throw new Exception("Unexpected preview fields");
+            var update=t.GetField("Update",BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic)?.GetValue(card);
+            if(update==null||(string)update.GetType().GetField("Repository").GetValue(update)!="Kelly-D-Ripper/Kellys-Replay-Mod-KRM"||(string)update.GetType().GetField("Asset").GetValue(update)!="Kellysreplaymod.dll")throw new Exception("DOORMAN update source missing");
             var profileType=doorman.GetType("KellysJOINCHECK.ModProfile",true);var profile=Activator.CreateInstance(profileType,true);
             var contentType=doorman.GetType("KellysJOINCHECK.InstalledContent",true);var content=Array.CreateInstance(contentType,0);
             var catalog=doorman.GetType("KellysJOINCHECK.ModCatalog",true);var catalogRead=catalog.GetMethod("Read",BindingFlags.Static|BindingFlags.NonPublic);
@@ -31,9 +33,10 @@ public static class DoormanMetadataProbe
             int found=0;foreach(var entry in entries){var et=entry.GetType();object Get(string field)=>et.GetField(field,BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic).GetValue(entry);
                 if((string)Get("Id")!=plugin)continue;found++;
                 if((string)Get("Name")!="Kelly's Replay Mod (plugin)"||!(bool)Get("Enabled")||Get("Manifest")==null)throw new Exception("DOORMAN catalog failed to attach metadata to loaded plugin");
+                if((string)Get("UpdateRepository")!="Kelly-D-Ripper/Kellys-Replay-Mod-KRM"||(string)Get("UpdateAsset")!="Kellysreplaymod.dll")throw new Exception("DOORMAN catalog did not resolve the GitHub update source: "+Get("UpdateRepository")+" "+Get("UpdateAsset"));
             }
             if(found!=1)throw new Exception("DOORMAN catalog found "+found+" replay entries");
-            log("DOORMAN CATALOG PASS actual 1.4.0-rc.36 catalog found one enabled replay plugin with the embedded preview");
+            log("DOORMAN CATALOG PASS actual 1.4.0-rc.36 catalog found one enabled replay plugin with the embedded preview and GitHub update source");
             log("DOORMAN METADATA PASS actual 1.4.0-rc.36 preview reader accepted embedded card; plugin="+plugin+" name="+name+" author="+author+" discord="+discord+" image=none");
         }
         finally{(assembly as IDisposable)?.Dispose();}

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using ReplayMod.Data;
 using ReplayMod.Events;
 using ReplayMod.Events.ConcreteEvents;
+using UnityEngine;
 
 namespace ReplayMod.Core;
 
 public partial class Recorder
 {
     private sealed class RecordedBuilding
-    { internal Building actor; internal BuildingStateSnapshot published; internal bool failed; internal float duration; }
+    { internal Building actor; internal BuildingStateSnapshot published; internal bool failed; internal float duration; internal Quaternion rotation; }
     private readonly Dictionary<uint,RecordedBuilding> _recordedBuildings=new Dictionary<uint,RecordedBuilding>();
     private double _lastBuildingCapture=-1;
     public void ObserveInitializedBuilding(Building building)
@@ -28,7 +29,8 @@ public partial class Recorder
     {
         if(!(unit is Building building))return;
         var prefab=building.definition?.unitPrefab?.GetComponent<Building>();
-        var binding=new RecordedBuilding {actor=building,duration=prefab!=null?prefab.collapseTime:building.collapseTime};_recordedBuildings[unit.persistentID.Id]=binding;
+        // Native startRotation stays identity for map-placed buildings; record the real orientation.
+        var binding=new RecordedBuilding {actor=building,duration=prefab!=null?prefab.collapseTime:building.collapseTime,rotation=building.transform.rotation};_recordedBuildings[unit.persistentID.Id]=binding;
         RecordBuildingState(binding);
     }
     private void RecordBuildingStates()
@@ -46,9 +48,9 @@ public partial class Recorder
             var building=binding.actor;
             float duration=binding.duration;
             if(!BuildingStateSnapshot.Finite(duration)||duration<0||duration>120)throw new InvalidOperationException("Unsupported building collapse duration");
-            if(binding.published?.Matches(building.disabled,duration,building.startPosition,building.startRotation)==true)return;
+            if(binding.published?.Matches(building.disabled,duration,building.startPosition,binding.rotation)==true)return;
             var sample=new BuildingStateSnapshot {time=_virtualTime,disabled=building.disabled,duration=duration,
-                anchor=building.startPosition,rotation=building.startRotation};
+                anchor=building.startPosition,rotation=binding.rotation};
             if(sample.disabled)
             {
                 float remaining=Math.Max(0,Math.Min(duration,building.collapseTime));

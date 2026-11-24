@@ -3,6 +3,8 @@
   "author": "Brig. Gen. Kelly D. Ripper",
   "description": "Record missions and multiplayer sessions, then replay them with a timeline, free and tracking cameras, camera paths, slow motion and cinematic tools. Includes recent-gameplay recording, adjustable weather and lighting, and support-log export. Based on the original ReplayMod by chiester3105.",
   "links": [
-    { "label": "Discord", "url": "https://discord.gg/FhsqkbgtWS" }
-  ]
+    { "label": "Discord", "url": "https://discord.gg/FhsqkbgtWS" },
+    { "label": "GitHub", "url": "https://github.com/Kelly-D-Ripper/Kellys-Replay-Mod-KRM" }
+  ],
+  "update": { "repository": "Kelly-D-Ripper/Kellys-Replay-Mod-KRM", "asset": "Kellysreplaymod.dll" }
 }

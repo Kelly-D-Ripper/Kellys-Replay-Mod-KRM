@@ -13,6 +13,9 @@ public sealed class ReplayBuildingPresentation
     private sealed class BuildingVisual
     {
         internal Building actor;
+        // Recorded spawn orientation. Map-placed buildings never set native
+        // startRotation, so recordings before this fix stored identity there.
+        internal Quaternion rotation;
         internal Renderer[] meshes;
         internal bool[] meshEnabled;
         internal Collider[] colliders;
@@ -31,7 +34,7 @@ public sealed class ReplayBuildingPresentation
         if(!(unit is Building building))return;
         var all=building.GetComponentsInChildren<Renderer>(true);var meshes=new List<Renderer>();
         foreach(var renderer in all)if(renderer is MeshRenderer||renderer is SkinnedMeshRenderer)meshes.Add(renderer);
-        var binding=new BuildingVisual {actor=building,meshes=meshes.ToArray(),colliders=building.GetComponentsInChildren<Collider>(true)};
+        var binding=new BuildingVisual {actor=building,rotation=building.transform.rotation,meshes=meshes.ToArray(),colliders=building.GetComponentsInChildren<Collider>(true)};
         binding.meshEnabled=new bool[binding.meshes.Length];binding.colliderEnabled=new bool[binding.colliders.Length];
         for(int n=0;n<binding.meshes.Length;n++)binding.meshEnabled[n]=binding.meshes[n].enabled;
         for(int n=0;n<binding.colliders.Length;n++)binding.colliderEnabled[n]=binding.colliders[n].enabled;
@@ -58,8 +61,8 @@ public sealed class ReplayBuildingPresentation
         if(!BuildingStateSnapshot.Finite(time)||!buildings.TryGetValue(id,out var binding)||!ReferenceEquals(binding.actor,actor)||binding.state==null)return false;
         var sample=binding.state;
         var point=sample.anchor.ToLocalPosition()-Vector3.up*sample.DropAt(time);
-        actor.transform.SetPositionAndRotation(point,sample.rotation);
-        if(actor.rb!=null){actor.rb.position=point;actor.rb.rotation=sample.rotation;}
+        actor.transform.SetPositionAndRotation(point,binding.rotation);
+        if(actor.rb!=null){actor.rb.position=point;actor.rb.rotation=binding.rotation;}
         ApplyVisibility(binding,sample.HiddenAt(time),sample.disabled);
         return true;
     }

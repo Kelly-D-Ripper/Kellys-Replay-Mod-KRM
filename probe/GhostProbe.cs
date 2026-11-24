@@ -56,6 +56,13 @@ public sealed class GhostProbeRunner:MonoBehaviour
             var player=ReplayManager.i.Playback; player.Pause();
             if(Environment.GetEnvironmentVariable("REPLAY_INDEX_STRESS")=="1")
             {await IndexStressProbe.Run(Log);Log("COMPLETE replay index and reader stress");return;}
+            if(!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("REPLAY_USER_BUILDINGS")))
+            {await UserReplayBuildingProbe.Run(Environment.GetEnvironmentVariable("REPLAY_USER_BUILDINGS"),7.4,Log);Log("COMPLETE user replay building test");return;}
+            if(Environment.GetEnvironmentVariable("REPLAY_BUILDING_ROTATION")=="1")
+            {
+                var buildingKey=(MapKey)typeof(Player).GetField("_key",BindingFlags.NonPublic|BindingFlags.Instance).GetValue(player);
+                await BuildingRotationProbe.Run(buildingKey,Log);Log("COMPLETE building rotation test");return;
+            }
             if(Environment.GetEnvironmentVariable("REPLAY_UI_INPUT")=="1")
             {await UiInputProbe.Run(Log);Log("COMPLETE studio keyboard input test");return;}
             if(Environment.GetEnvironmentVariable("REPLAY_MIXED_WEAPONS")=="1")
