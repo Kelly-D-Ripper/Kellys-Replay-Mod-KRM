@@ -18,6 +18,11 @@
 </p>
 
 <p align="center">
+  <a href="https://youtu.be/OIN9gJChfUw"><img src="docs/assets/trailer.jpg" alt="Watch the Kelly's Replay Mod trailer" width="88%"></a><br>
+  <sub>🎬 Trailer created by <a href="https://www.youtube.com/channel/UCXho3MN24cEPnsQ_VDzur8Q">Enplo</a> and <a href="https://www.youtube.com/channel/UCbwrfYzULVGh4uNZa48hv6Q">Shutter</a></sub>
+</p>
+
+<p align="center">
   <a href="#-install">Install</a> ·
   <a href="#-first-shot-in-five-steps">Quick start</a> ·
   <a href="#-controls">Controls</a> ·
