@@ -24,6 +24,7 @@
 
 <p align="center">
   <a href="#-install">Install</a> ·
+  <a href="#-video-tutorial">Tutorial</a> ·
   <a href="#-first-shot-in-five-steps">Quick start</a> ·
   <a href="#-controls">Controls</a> ·
   <a href="#-features">Features</a> ·
@@ -55,6 +56,15 @@
 3. **Upgrading?** Remove any older `ReplayMod.dll` or `Kellysreplaymod.dll` first, so only one copy is installed. Your configuration, `Replays` folder and camera projects are kept.
 
 KRM is a client mod; don't install it on a headless server. New recordings use **replay format 12**, which older ReplayMod builds cannot open. Older supported recordings remain readable.
+
+## 🎓 Video tutorial
+
+New to the studio? Start with Enplo's video guide to the mod.
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=GweeEa0eYGI"><img src="docs/assets/tutorial.jpg" alt="Watch the Kelly's Replay Mod guide and tutorial" width="70%"></a><br>
+  <sub>🎓 <a href="https://www.youtube.com/watch?v=GweeEa0eYGI">Kelly's Replay Mod Guide/Tutorial</a> by <a href="https://www.youtube.com/channel/UCXho3MN24cEPnsQ_VDzur8Q">Enplo</a></sub>
+</p>
 
 ## 🎬 First shot in five steps
 
