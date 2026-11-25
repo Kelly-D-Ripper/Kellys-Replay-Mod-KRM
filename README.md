@@ -13,6 +13,11 @@
 </p>
 
 <p align="center">
+  <i>Built hand in hand with the <a href="#-the-replay-mod-testing-squad"><b>Replay Mod Testing Squad</b></a>, some of Nuclear Option's best content creators.<br>
+  Months of their testing, bug hunting and feature requests tailored the feature set and tools you'll find here.</i>
+</p>
+
+<p align="center">
   <a href="#-install">Install</a> ·
   <a href="#-first-shot-in-five-steps">Quick start</a> ·
   <a href="#-controls">Controls</a> ·
@@ -154,9 +159,9 @@ dotnet run --project tests/Audit/Audit.csproj -c Release -- src/bin/Release/net4
 
 </details>
 
-## 💚 Thank you
+## 💚 The Replay Mod Testing Squad
 
-A huge thank you to the people who spent months testing, bug hunting, requesting features and offering massively appreciated support:
+Kelly's Replay Mod was shaped by the Replay Mod Testing Squad, some of Nuclear Option's best content creators. Over months of testing, bug hunting and feature requests, their feedback tailored the feature set and decided which tools were built and how they work. A huge thank you for their time and massively appreciated support:
 
 - **Enplo**: [YouTube](https://www.youtube.com/channel/UCXho3MN24cEPnsQ_VDzur8Q)
 - **Shutter**: [YouTube](https://www.youtube.com/channel/UCbwrfYzULVGh4uNZa48hv6Q)
